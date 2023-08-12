@@ -1,18 +1,16 @@
-import { useState,useContext,createContext } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './utils/firebase.js'
-import './App.css'
-import { UserProvider, useUserContext } from './context/user_context.jsx'
+import { useState, useContext, createContext } from 'react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@utils/firebase.js'
+import '@/App.css'
+import { UserProvider, useUserContext } from '@context/user_context.jsx'
 
-
-
-
-function App() {
+function SignUp() {
+    const [name,setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {user, updateUser} = useUserContext();
+    const { user, updateUser } = useUserContext()
 
-    console.log(user);
+    console.log(user)
     const onSubmit = async (e) => {
         e.preventDefault()
 
@@ -30,7 +28,7 @@ function App() {
                 const errorMessage = error.message
                 console.log(errorCode, errorMessage)
 
-                if(errorCode === 'auth/email-already-in-use') {
+                if (errorCode === 'auth/email-already-in-use') {
                     alert('Email already in use')
                 } else if (errorCode === 'auth/invalid-email') {
                     alert('Invalid email')
@@ -42,12 +40,11 @@ function App() {
             })
     }
 
-
     const onLogout = () => {
         updateUser(null) // Clear user data
     }
     return (
-        <div className='main w-full h-full flex justify-center items-center'>
+        <div className='main w-full h-full flex flex-col justify-center items-center space-y-10'>
             <div>
                 {user.username ? (
                     <div>
@@ -55,22 +52,33 @@ function App() {
                         <button onClick={onLogout}>Logout</button>
                     </div>
                 ) : (
-                    <p>Please log in.</p>
+                    <h2 className='text-2xl font-bold'>Sign Up</h2>
                 )}
             </div>
+            <input
+                type='text'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder='Name'
+                className='border h-10 w-1/5 px-5 rounded-lg'
+            />
             <input
                 type='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder='Email'
+                className='border h-10 w-1/5 px-5 rounded-lg'
             />
             <input
                 type='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                placeholder='Password'
+                className='border h-10 w-1/5 px-5 rounded-lg'
             />
             <input type='submit' value='Submit' onClick={onSubmit} />
         </div>
     )
 }
 
-export default App
+export default SignUp
