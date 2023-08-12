@@ -2,7 +2,8 @@ import { useState,useContext,createContext } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './utils/firebase.js'
 import './App.css'
-import { UserProvider, useUserContext} from './context/user_context.jsx'
+import { UserProvider, useUserContext } from './context/user_context.jsx'
+
 
 
 
