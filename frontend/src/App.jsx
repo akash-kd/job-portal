@@ -2,8 +2,8 @@ import { useState,useContext,createContext } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './utils/firebase.js'
 import './App.css'
-import { UserProvider, useUserContext } from './context/user_context.jsx'
-
+import { useUserContext } from '@context/user_context.jsx'
+import { onAuthStateChanged } from 'firebase/auth'
 
 
 
@@ -12,7 +12,15 @@ function App() {
     const [password, setPassword] = useState('')
     const {user, updateUser} = useUserContext();
 
-    console.log(user);
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            updateUser(user);
+        } else {
+            updateUser(null);
+        }
+    })
+    
     const onSubmit = async (e) => {
         e.preventDefault()
 
@@ -42,6 +50,8 @@ function App() {
             })
     }
 
+    
+
 
     const onLogout = () => {
         updateUser(null) // Clear user data
@@ -49,26 +59,14 @@ function App() {
     return (
         <div className='main w-full h-full flex justify-center items-center'>
             <div>
-                {user.username ? (
+                {user.email ? (
                     <div>
-                        <h2>Welcome, {user.username}!</h2>
-                        <button onClick={onLogout}>Logout</button>
+                        <h2>Welcome, {user.email}!</h2>
                     </div>
                 ) : (
-                    <p>Please log in.</p>
+                    <p>Home</p>
                 )}
             </div>
-            <input
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <input type='submit' value='Submit' onClick={onSubmit} />
         </div>
     )
 }
