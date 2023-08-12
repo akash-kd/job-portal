@@ -1,11 +1,3 @@
-#root{
-  width:100%;
-}
-
-.main{
-  display: flex;
-  flex-direction: column;
-  justify-contents: center;
-  align-items: center;
-
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
