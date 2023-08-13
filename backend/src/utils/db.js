@@ -6,6 +6,7 @@ config({path:'.env'})
 export const connect = () => {
     // eslint-disable-next-line no-undef
     mongoose.set('strictQuery', false)
+    console.log('Connecting...')
     return mongoose.connect(process.env.MONGO_DB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
