@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react'
-import { signInWithEmailAndPassword,getAuth} from 'firebase/auth'
+import { signInWithEmailAndPassword, getAuth} from 'firebase/auth'
 import { auth } from '@utils/firebase.js'
 import { UserProvider, useUserContext } from '@context/user_context.jsx'
 import { useNavigate } from 'react-router-dom'
 
-function Login() {
+function LoginForRecruiter() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { user, updateUser } = useUserContext()
@@ -12,7 +12,7 @@ function Login() {
     const API_URL = import.meta.env.VITE_API_URL
 
     const onSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         signInWithEmailAndPassword(auth, email, password)
             .then(async (userCredential) => {
                 // Signed in
@@ -32,12 +32,14 @@ function Login() {
                 if (status === 200) {
                     const data = await response.json()
                     if (data === null) alert('User Does not exist')
-                    else if (data && data.isRecruiter) {
-                        alert('You are a recruiter, please login from the recruiter login page')
+                    else if (data && data.isRecruiter == false) {
+                        alert(
+                            'You are a candidate. Please login from candidate login page',
+                        )
                         getAuth().signOut()
                     } else {
                         navigate('/')
-                        localStorage.setItem('isRecruit', false)
+                        localStorage.setItem('isRecruit', true)
                     }
                 } else if (status === 400) {
                     alert('Bad request')
@@ -52,7 +54,16 @@ function Login() {
                 const errorCode = error.code
                 const errorMessage = error.message
                 console.log(errorCode, errorMessage)
-                alert(errorMessage)
+
+                if (errorCode === 'auth/email-already-in-use') {
+                    alert('Email already in use')
+                } else if (errorCode === 'auth/invalid-email') {
+                    alert('Invalid email')
+                } else if (errorCode === 'auth/weak-password') {
+                    alert('Weak password')
+                } else {
+                    alert(errorMessage)
+                }
             })
     }
 
@@ -68,12 +79,12 @@ function Login() {
                         src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'
                         alt='logo'
                     />
-						App Name
+					App Name
                 </a>
                 <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
                     <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
                         <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>
-								Sign in to Find Jobs
+							Sign in to Recruit
                         </h1>
                         <form className='space-y-4 md:space-y-6' action='#'>
                             <div>
@@ -81,7 +92,7 @@ function Login() {
                                     htmlFor='email'
                                     className='block mb-2 text-sm font-medium text-gray-900'
                                 >
-										Your email
+									Your email
                                 </label>
                                 <input
                                     onChange={(e) => setEmail(e.target.value)}
@@ -99,7 +110,7 @@ function Login() {
                                     htmlFor='password'
                                     className='block mb-2 text-sm font-medium text-gray-900'
                                 >
-										Password
+									Password
                                 </label>
                                 <input
                                     onChange={(e) => setPassword(e.target.value)}
@@ -117,15 +128,15 @@ function Login() {
                                 type='submit'
                                 className='w-full text-white bg-sky-500 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
                             >
-									Sign in
+								Sign in
                             </button>
                             <p className='text-sm font-light text-gray-500'>
-									Sign In for recruiter?{' '}
+								Sign in for recruiter?{' '}
                                 <a
-                                    href='/signinforrecruiter'
+                                    href='#'
                                     className='font-medium text-sky-600 hover:underline'
                                 >
-										Sign In
+									Sign In
                                 </a>
                             </p>
                         </form>
@@ -136,4 +147,4 @@ function Login() {
     )
 }
 
-export default Login
+export default LoginForRecruiter

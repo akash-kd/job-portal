@@ -4,22 +4,30 @@ import { auth } from './utils/firebase.js'
 import './App.css'
 import { useUserContext } from '@context/user_context.jsx'
 import { onAuthStateChanged } from 'firebase/auth'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Nav from './components/nav/nav.jsx'
+import SignUp from '@pages/signup/signup.jsx'
+import Login from '@pages/login/login.jsx'
 
-
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+    },
+    {
+        path: '/signin',
+        element: <Login />,
+    },
+    {
+        path: '/signup',
+        element: <SignUp />,
+    },
+])
 
 function App() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const {user, updateUser} = useUserContext();
-
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            updateUser(user);
-        } else {
-            updateUser(null);
-        }
-    })
     
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -50,18 +58,29 @@ function App() {
             })
     }
 
+    onAuthStateChanged(auth, (userCredential) => {
+        if (userCredential) {
+            updateUser(userCredential)
+            console.log(userCredential)
+        } else {
+            updateUser(null)
+            console.log(userCredential)
+        }
+    })
+
     
 
 
     const onLogout = () => {
-        updateUser(null) // Clear user data
+        auth.signOut();
     }
     return (
         <div className='main w-full h-full flex justify-center items-center'>
             <div>
-                {user.email ? (
+                {user && user.email ? (
                     <div>
                         <h2>Welcome, {user.email}!</h2>
+                        <button onClick={onLogout}>Logout</button>
                     </div>
                 ) : (
                     <p>Home</p>

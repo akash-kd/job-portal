@@ -8,6 +8,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Nav from './components/nav/nav.jsx';
 import SignUp from '@pages/signup/signup.jsx'
 import Login from '@pages/login/login.jsx'
+import LoginForRecruiter from '@pages/loginForRecruiter/loginforrecruiter.jsx';
+import SignUpForRecruiter from '@pages/signUpForRecruiter/signupForRecruiter.jsx';
 
 const router = createBrowserRouter([
     {
@@ -19,25 +21,30 @@ const router = createBrowserRouter([
         element: <Login />,
     },
     {
+        path: '/signinforrecruiter',
+        element: <LoginForRecruiter />,
+    },
+    {
         path: '/signup',
         element: <SignUp />,
     },
+    {
+        path: '/signupforrecruiter',
+        element: <SignUpForRecruiter/>,
+    },
 ])
-const auth = getAuth()
-let user;
 
-onAuthStateChanged(auth, (userCredential) => {
-    if (userCredential) {
-        user = userCredential
-    } else {
-        user = null
-    }
-})
+const user = getAuth().currentUser;
+const onLogout = () => {
+    getAuth().signOut();
+}
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <UserProvider>
-            {user ? <Nav /> : <p>Logout</p>}
+            {/* if user then <Nav /> or logout */}
+            { user ? <button onClick={onLogout}>Logout</button> : <Nav />}
             <RouterProvider router={router} />
         </UserProvider>
     </React.StrictMode>,
