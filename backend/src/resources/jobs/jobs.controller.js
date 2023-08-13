@@ -1,6 +1,7 @@
 import { Jobs } from './jobs.model.js'
 
-export const addJob = async (req,res) => {
+export const addJob = async (req, res) => {
+    console.log("JOBDATA", req.body)
     if (req.body.desc && req.body.requirements && req.body.role && req.body.company && req.body.location && req.body.createdBy) { 
         const job = await Jobs(req.body)
         try {
@@ -9,7 +10,7 @@ export const addJob = async (req,res) => {
         } catch (error) {
             res.status(404).send(error).end()
         }
-    }
+    } else res.status(422).json({message: 'Missing Data'}).end()
 }
 
 export const changeStatus = async (req, res) => {
