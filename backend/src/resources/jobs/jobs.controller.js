@@ -32,3 +32,13 @@ export const changeStatus = async (req, res) => {
         res.status(500).json({ message: 'Error updating job status', error: error.message })
     }
 }
+
+export const findJobs = async (req, res) => { 
+    try {
+        const createdBy = req.params.id
+        const jobs = await Jobs.find({ createdBy: createdBy })
+        res.status(200).json(jobs).end()
+    } catch (error) {
+        res.status(500).json({message: 'Internal Error'})
+    }
+}

@@ -10,7 +10,8 @@ import SignUp from '@pages/signup/signup.jsx'
 import Login from '@pages/login/login.jsx'
 import LoginForRecruiter from '@pages/loginForRecruiter/loginforrecruiter.jsx';
 import SignUpForRecruiter from '@pages/signUpForRecruiter/signupForRecruiter.jsx';
-import Recruit from './pages/recruit/main.jsx';
+import Recruit from '@pages/recruit/main.jsx';
+import AddJob from '@pages/recruit/add.jsx';
 
 const router = createBrowserRouter([
     {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/recruit/dashboard',
-        element: <Recruit/>,
+        element: <Recruit />,
+    },
+    {
+        path: '/recruit/add',
+        element: <AddJob />,
     },
 ])
 
@@ -48,7 +53,6 @@ const onLogout = () => {
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <UserProvider>
-            {/* if user then <Nav /> or logout */}
             { user ? <button onClick={onLogout}>Logout</button> : <Nav />}
             <RouterProvider router={router} />
         </UserProvider>

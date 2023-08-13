@@ -4,7 +4,7 @@ import { auth } from './utils/firebase.js'
 import './App.css'
 import { useUserContext } from '@context/user_context.jsx'
 import { onAuthStateChanged } from 'firebase/auth'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
 import Nav from './components/nav/nav.jsx'
 import SignUp from '@pages/signup/signup.jsx'
 import Login from '@pages/login/login.jsx'
@@ -28,7 +28,7 @@ function App() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const {user, updateUser} = useUserContext();
-    
+    const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault()
 
@@ -70,7 +70,8 @@ function App() {
 
     
 
-
+    const isRecruit = localStorage.getItem('isRecruit')
+    if(isRecruit) navigate('/recruit/dashboard')
     const onLogout = () => {
         auth.signOut();
     }
