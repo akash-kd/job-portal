@@ -10,6 +10,7 @@ import SignUp from '@pages/signup/signup.jsx'
 import Login from '@pages/login/login.jsx'
 import LoginForRecruiter from '@pages/loginForRecruiter/loginforrecruiter.jsx';
 import SignUpForRecruiter from '@pages/signUpForRecruiter/signupForRecruiter.jsx';
+import Recruit from './pages/recruit/main.jsx';
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/signupforrecruiter',
-        element: <SignUpForRecruiter/>,
+        element: <SignUpForRecruiter />,
+    },
+    {
+        path: '/recruit/dashboard',
+        element: <Recruit/>,
     },
 ])
 

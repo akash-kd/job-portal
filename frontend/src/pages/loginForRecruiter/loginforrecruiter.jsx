@@ -38,7 +38,7 @@ function LoginForRecruiter() {
                         )
                         getAuth().signOut()
                     } else {
-                        navigate('/')
+                        navigate('/recruit/dashboard')
                         localStorage.setItem('isRecruit', true)
                     }
                 } else if (status === 400) {

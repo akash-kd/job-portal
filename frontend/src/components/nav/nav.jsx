@@ -8,7 +8,7 @@ export default function Nav() {
     const isRecruit = localStorage.getItem('isRecruit')
     console.log(user, isRecruit)
 
-    if (user.email) {
+    if (user && user.email) {
         return (
             <div className='w-full min-h-10 flex justify-between px-10 space-x-10 py-5'>
                 <div className='font-bold'>

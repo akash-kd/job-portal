@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 import { Jobs } from './jobs.model.js'
 
 export const addJob = async (req, res) => {
-    console.log("JOBDATA", req.body)
     if (req.body.desc && req.body.requirements && req.body.role && req.body.company && req.body.location && req.body.createdBy) { 
         const job = await Jobs(req.body)
         try {

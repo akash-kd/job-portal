@@ -43,7 +43,7 @@ function SignUpForRecruiter() {
                 const status = response.status
                 if (status === 200) {
                     const data = await response.json()
-                    navigate('/')
+                    navigate('/recruit/dashboard')
                 } else if (status === 400) {
                     alert('Bad request')
                 } else if (status === 422) {
