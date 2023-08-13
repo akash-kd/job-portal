@@ -6,7 +6,9 @@ import cors from 'cors'
 import { connect } from './utils/db.js'
 import goalRouter from './resources/goal/goal.router.js'
 import notesRouter from './resources/notes/notes.router.js'
+import userRouter from './resources/user/user.router.js'
 import { config } from 'dotenv'
+import JobsRouter from './resources/jobs/jobs.router.js'
 
 
 
@@ -21,7 +23,9 @@ app.use(morgan('dev'))
 app.use(cors())
 app.options('*', cors())
 app.use('/notes',notesRouter) 
-app.use('/goal',goalRouter)
+app.use('/goal', goalRouter)
+app.use('/user', userRouter)
+app.use('/jobs', JobsRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello World - Working Properly')
