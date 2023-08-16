@@ -8,7 +8,6 @@ export default function Nav() {
     const isRecruit = localStorage.getItem('isRecruit')
     const { user, updateUser } = useUserContext()
 
-
     if (user && user.email) {
         return (
             <div className='w-full min-h-10 flex justify-between px-10 space-x-10 py-5 border-b'>
@@ -22,6 +21,10 @@ export default function Nav() {
                             console.log('Button Clicked')
                             getAuth().signOut()
                             updateUser(null)
+                            localStorage.removeItem('user')
+                            localStorage.removeItem('isRecruit')
+                            
+                            window.location.href = '/'
                         }}
                     >
 						Logout

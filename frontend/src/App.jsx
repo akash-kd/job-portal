@@ -1,7 +1,6 @@
 import { useState,useContext,createContext } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './utils/firebase.js'
-import './App.css'
 import { useUserContext } from '@context/user_context.jsx'
 import { onAuthStateChanged } from 'firebase/auth'
 import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
@@ -68,13 +67,10 @@ function App() {
         }
     })
 
-    
-
-    const isRecruit = localStorage.getItem('isRecruit')
-    if(isRecruit) navigate('/recruit/dashboard')
     const onLogout = () => {
         auth.signOut();
     }
+    
     return (
         <div className='main w-full h-full flex justify-center items-center'>
             <div>

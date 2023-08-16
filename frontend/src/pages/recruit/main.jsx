@@ -2,13 +2,20 @@
 import { getAuth } from 'firebase/auth';
 import { useEffect } from 'react';
 import Job from '@components/job/job.jsx';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Recruit() {
     const API_URL = import.meta.env.VITE_API_URL
     const user = JSON.parse(localStorage.getItem('user'))
+    const navigate = useNavigate();
 
     useEffect(() => {
+
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) navigate('/')
+        
+
 
         async function fetchJobs(){ 
             const response = await fetch(`${API_URL}/jobs/get/${user.uid}`, {
@@ -24,7 +31,7 @@ export default function Recruit() {
         }
 
 
-        fetchJobs();
+        if(user && user.email) fetchJobs();
         
     },[])
 
