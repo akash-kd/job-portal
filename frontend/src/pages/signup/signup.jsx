@@ -43,6 +43,8 @@ function SignUp() {
                 if (status === 200) {
                     const data = await response.json()
                     navigate('/')
+                    navigate('/jobportal')
+                    localStorage.setItem('isRecruit', false)
                 } else if (status === 400) {
                     alert('Bad request')
                 } else if (status === 422) {

@@ -36,7 +36,7 @@ function Login() {
                         alert('You are a recruiter, please login from the recruiter login page')
                         getAuth().signOut()
                     } else {
-                        navigate('/')
+                        navigate('/jobportal')
                         localStorage.setItem('isRecruit', false)
                     }
                 } else if (status === 400) {
