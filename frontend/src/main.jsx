@@ -13,6 +13,7 @@ import SignUpForRecruiter from '@pages/signUpForRecruiter/signupForRecruiter.jsx
 import Recruit from '@pages/recruit/main.jsx';
 import AddJob from '@pages/recruit/add.jsx';
 import JobPortal from '@pages/portal/main.jsx';
+import Applicants from '@pages/applicants/main.jsx';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     {
         path: '/jobportal',
         element: <JobPortal />,
+    },
+    {
+        path: '/applicants/:jobId',
+        element: <Applicants />,
     },
 ])
 

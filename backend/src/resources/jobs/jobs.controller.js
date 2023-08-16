@@ -33,11 +33,19 @@ export const changeStatus = async (req, res) => {
     }
 }
 
+export const jobsByRecruiter = async (req, res) => {
+    try {
+        const jobs = await Jobs.find({ createdBy: req.params.id })
+        res.status(200).json(jobs)
+    } catch (error) {
+        res.status(500).json({ message: 'Error getting jobs', error: error.message })
+    }
+}
+
 export const findJobs = async (req, res) => { 
     try {
-        const createdBy = req.params.id
-        const jobs = await Jobs.find({ createdBy: createdBy })
-        res.status(200).json(jobs).end()
+        const jobs = await Jobs.find()
+        res.status(200).json(jobs)
     } catch (error) {
         res.status(500).json({message: 'Internal Error'})
     }

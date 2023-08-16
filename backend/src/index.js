@@ -9,6 +9,7 @@ import notesRouter from './resources/notes/notes.router.js'
 import userRouter from './resources/user/user.router.js'
 import { config } from 'dotenv'
 import JobsRouter from './resources/jobs/jobs.router.js'
+import ApplicationRouter from './resources/application/application.router.js'
 
 
 
@@ -26,6 +27,7 @@ app.use('/notes',notesRouter)
 app.use('/goal', goalRouter)
 app.use('/user', userRouter)
 app.use('/jobs', JobsRouter)
+app.use('/application', ApplicationRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello World - Working Properly')

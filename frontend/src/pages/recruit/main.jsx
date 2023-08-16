@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { getAuth } from 'firebase/auth';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Job from '@components/job/job.jsx';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ export default function Recruit() {
     const API_URL = import.meta.env.VITE_API_URL
     const user = JSON.parse(localStorage.getItem('user'))
     const navigate = useNavigate();
+    const [data,setData] = useState([])
 
     useEffect(() => {
 
@@ -18,7 +19,7 @@ export default function Recruit() {
 
 
         async function fetchJobs(){ 
-            const response = await fetch(`${API_URL}/jobs/get/${user.uid}`, {
+            const response = await fetch(`${API_URL}/jobs/getJobsByRecruiter/${user.uid}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,7 +28,8 @@ export default function Recruit() {
 
             const status = await response.status;
             const data = await response.json();
-            console.log(status, data)
+            console.log('JOBS', status, data)
+            setData(data)
         }
 
 
@@ -47,8 +49,9 @@ export default function Recruit() {
                 </a>
             </div>
             <div className='grid grid-cols-2 gap-5'>
-                <Job />
-                <Job />
+                {data.map((job) => (
+                    <Job key={job.id} job={job} />
+                ))}
             </div>
         </div>
     )
