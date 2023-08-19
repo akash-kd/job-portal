@@ -64,14 +64,27 @@ export const applicantsByJob = async (req, res) => {
     }
 }
 
+export const getApplicationsByJobAndUser = async (req, res) => {
+    try {
+        const jobId = req.body.jobId
+        const userId = req.body.userId
+        const user = await User.findOne({ createdBy: userId })
+        const application = await Application.findOne({ applicationForJob: jobId, applicationByUser: user._id.toString() })
+        res.status(200).json(application)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
 export const changeStatus = async (req, res) => {
     try {
-        const applicationId = req.body.applicationId
+        const jobId = req.body.jobId
+        const userId = req.body.userId
         const status = req.body.status
-        const application = await Application.findById(applicationId)
+        const application = await Application.findOne({ applicationForJob: jobId, applicationByUser: userId })
         application.applicationStatus = status
-        application.save()
-        res.status(200).json(application)
+        const savedApplication = await application.save()
+        res.status(200).json(savedApplication)
     } catch (error) {
         res.status(400).json(error)
     }

@@ -8,6 +8,7 @@ function SignUp() {
     const [name,setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [resume, setResume] = useState('')
     const { user, updateUser } = useUserContext()
     const API_URL = import.meta.env.VITE_API_URL
     const navigate = useNavigate()
@@ -30,7 +31,8 @@ function SignUp() {
                 const body = {
                     createdBy: user.uid,
                     isRecruiter: false,
-                    name: name
+                    name: name,
+                    resume: resume,
                 }
                 const response = await fetch(`${API_URL}/user/create`, {
                     method: 'POST',
@@ -83,7 +85,7 @@ function SignUp() {
                         src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'
                         alt='logo'
                     />
-						App Name
+						Job Hunt
                 </a>
                 <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
                     <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
@@ -124,6 +126,23 @@ function SignUp() {
                                     id='email'
                                     className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
                                     placeholder='name@company.com'
+                                />
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor='resume'
+                                    className='block mb-2 text-sm font-medium text-gray-900'
+                                >
+										Upload Resume
+                                </label>
+                                <input
+                                    onChange={(e) => setResume(e.target.value)}
+                                    value={resume}
+                                    type='url'
+                                    name='resume'
+                                    id='resume'
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
+                                    placeholder='drive or dropbox link'
                                 />
                             </div>
                             <div>

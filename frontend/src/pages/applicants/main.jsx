@@ -25,23 +25,36 @@ export default function Applicants() {
         getApplicants()
     }, [])
 
-    const onAccept = async (id) => {
-        console.log(id)
-        // const response = await fetch(
-        //     `${API_URL}/application/accept/${id}`,
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             applicationId: '123',
-        //             applicationStatus: 'accepted',
-        //         }),
-        //     },
-        // )
-        // const data = await response.json()
-        // setData(data)
+    const onAccept = async (userId) => {
+        const response = await fetch(`${API_URL}/application/changeStatus`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                jobId: jobId,
+                userId: userId,
+                status: true
+            }),
+        })
+        const data = await response.json()
+        console.log('STATUS',data)
+    }
+
+    const onReject = async (userId) => {
+        const response = await fetch(`${API_URL}/application/changeStatus`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                jobId: jobId,
+                userId: userId,
+                status: false,
+            }),
+        })
+        const data = await response.json()
+        console.log('STATUS', data)
     }
 
     return (
@@ -50,37 +63,52 @@ export default function Applicants() {
                 <thead className='text-xs text-gray-700 uppercase bg-gray-50 '>
                     <tr>
                         <th scope='col' className='px-6 py-3'>
-							Applicant
+								Applicant
                         </th>
-                        <th scope='col' className='px-6 py-3 flex items-center space-x-10'>
-							Select or Reject
+                        <th scope='col' className='px-6 py-3'>
+								Resume
+                        </th>
+                        <th
+                            scope='col'
+                            className='px-6 py-3 flex items-center space-x-10'
+                        >
+								Select or Reject
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {data !== null &&
-						data.map((item, index) => (
-						    <tr className='bg-white border-b' key={index}>
-						        <th
-						            scope='row'
-						            className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
-						        >
-						            {item.name}
-						        </th>
-						        <td className='px-6 py-4 flex items-center space-x-10'>
-						            <button
-						                onClick={() => onAccept(item._id)}
-						                className='bg-green-500 py-2 px-5 rounded-md text-white'
-						            >
-										Accept
-						            </button>
-						            <p>OR</p>
-						            <button className='bg-red-500 py-2 px-5 rounded-md text-white'>
-										Reject
-						            </button>
-						        </td>
-						    </tr>
-						))}
+							data.map((item, index) => (
+							    <tr className='bg-white border-b' key={index}>
+							        <th
+							            scope='row'
+							            className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
+							        >
+							            {item.name}
+							        </th>
+							        <th
+							            scope='row'
+							            className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap'
+							        >
+                                        <a href={item.resume} target="_blank" className='hover:text-sky-500 hover:underline cursor-pointer'>Resume</a>
+							        </th>
+							        <td className='px-6 py-4 flex items-center space-x-10'>
+							            <button
+							                onClick={() => onAccept(item._id)}
+							                className='bg-green-500 py-2 px-5 rounded-md text-white'
+							            >
+											Accept
+							            </button>
+							            <p>OR</p>
+							            <button
+							                onClick={() => onReject(item._id)}
+							                className='bg-red-500 py-2 px-5 rounded-md text-white'
+							            >
+											Reject
+							            </button>
+							        </td>
+							    </tr>
+							))}
                 </tbody>
             </table>
         </div>

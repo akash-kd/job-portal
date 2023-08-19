@@ -60,7 +60,7 @@ export default function JobPortal() {
             </div>
             <div className='flex flex-col'>
                 {applications.map((job, index) => {
-                    return <Apply key={index} job={job} apply={ false } />
+                    return <Apply key={index} job={job} apply={false} />
                 })}
             </div>
         </div>

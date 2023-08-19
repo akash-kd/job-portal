@@ -49,8 +49,8 @@ export default function Recruit() {
                 </a>
             </div>
             <div className='grid grid-cols-2 gap-5'>
-                {data.map((job) => (
-                    <Job key={job.id} job={job} />
+                {data.map((job,index) => (
+                    <Job key={job.index} job={job} />
                 ))}
             </div>
         </div>

@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             required: true,
         },
+        resume: {
+            type: String,
+            required: true,
+        },
         createdBy:{
             required: true,
             type: String,

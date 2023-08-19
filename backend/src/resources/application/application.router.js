@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { addApplication, getJobsByUser, applicantsByJob, changeStatus} from './application.controller.js'
+import { addApplication, getJobsByUser, applicantsByJob, changeStatus, getApplicationsByJobAndUser} from './application.controller.js'
 const ApplicationRouter = Router()
 
 ApplicationRouter
@@ -7,5 +7,6 @@ ApplicationRouter
     .post('/get', getJobsByUser)
     .get('/getApplicants/:id', applicantsByJob)
     .post('/changeStatus', changeStatus)
+    .post('/getApplicationsByJobAndUser',getApplicationsByJobAndUser)
 
 export default ApplicationRouter
