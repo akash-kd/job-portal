@@ -64,6 +64,7 @@ export default function Apply({ job, apply }) {
                     </button>
                 </div>
             )}
+            
 
             {apply == false &&
 					application &&
