@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema(
         },
         resume: {
             type: String,
-            required: true,
         },
         createdBy:{
             required: true,
